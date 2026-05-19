@@ -1,17 +1,17 @@
 # Rate Limit Test Screenshots
 
-このフォルダにはテスト実行時のスクリーンショットを保存します。
+이 폴더에는 테스트 실행 시의 스크린샷을 저장합니다.
 
-## テスト後にスクリーンショットを保存する方法
+## 테스트 후 스크린샷을 저장하는 방법
 
-1. `uvicorn main:app --reload` でサーバーを起動
-2. ブラウザで `http://127.0.0.1:8000/hello` にアクセス
-3. 10回までリクエストを送信（200 OK）
-4. 11回目をリクエスト（429 Too Many Requests）
-5. ブラウザのスクリーンショット機能を 사용해保存
-6. このフォルダに `rate_limit_result.png` として保存
+1. `uvicorn main:app --reload` 로 서버를 시작
+2. 브라우저에서 `http://127.0.0.1:8000/hello` 에 접근
+3. 10번까지 요청을 전송 (200 OK)
+4. 11번째 요청을 전송 (429 Too Many Requests)
+5. 브라우저의 스크린샷 기능을 사용해 저장
+6. 이 폴더에 `rate_limit_result.png` 로 저장
 
-## 期待される結果
+## 기대되는 결과
 
-- 1-10回目: 正常なJSONレスポンス (`{"message": "Hello World"}`)
-- 11回目以降: エラーレスポンス (`429 Too Many Requests`)
+- 1-10번째: 정상적인 JSON 응답 (`{"message": "Hello World"}`)
+- 11번째 이후: 에러 응답 (`429 Too Many Requests`)

@@ -1,6 +1,6 @@
 """
 FastAPI Rate Limit Test Project
-SlowAPI를利用したレート制限機能の実装
+SlowAPI를 활용한 Rate Limit 기능 구현
 """
 
 from fastapi import FastAPI, Request
@@ -9,26 +9,26 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-# FastAPIアプリケーションの初期化
+# FastAPI 애플리케이션 초기화
 app = FastAPI(
     title="Rate Limit Test API",
-    description="SlowAPIを使用したレート制限機能の実装テスト",
+    description="SlowAPI를 사용한 Rate Limit 기능 구현 테스트",
     version="1.0.0"
 )
 
-# SlowAPI Limiterの初期化
-# get_remote_addressを使用してクライアントのIPアドレスを識別
+# SlowAPI Limiter 초기화
+# get_remote_address를 사용하여 클라이언트의 IP 주소를 식별
 limiter = Limiter(key_func=get_remote_address)
 
-# FastAPIのアプリにLimiterを登録
+# FastAPI 앱에 Limiter 등록
 app.state.limiter = limiter
 
-# RateLimitExceeded例外ハンドラーの登録
+# RateLimitExceeded 예외 핸들러 등록
 @app.exception_handler(RateLimitExceeded)
 async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     """
-    レート制限超過時のエラーレスポンスを返すハンドラー
-    429 Too Many Requestsステータスを返却
+    Rate Limit 초과 시 에러 응답을 반환하는 핸들러
+    429 Too Many Requests 상태코드를 반환
     """
     return JSONResponse(
         status_code=429,
@@ -40,11 +40,11 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
 
 
 @app.get("/hello")
-@limiter.limit("10/minute")  # 1分間に10回までのリクエストを許可
+@limiter.limit("10/minute")  # 1분에 10번까지 요청 허용
 async def hello(request: Request):
     """
-    helloエンドポイント
-    1分間に10回までのリクエストを許可し，超过すると429エラーを返す
+    hello 엔드포인트
+    1분에 10번까지 요청을 허용하고, 초과하면 429 에러를 반환
     """
     return {
         "message": "Hello World"
@@ -54,7 +54,7 @@ async def hello(request: Request):
 @app.get("/")
 async def root():
     """
-    ルートパスへのリクエストを処理
+    루트 경로로의 요청을 처리합니다
     """
     return {
         "message": "FastAPI Rate Limit Test Server",
